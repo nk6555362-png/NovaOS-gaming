@@ -1,0 +1,52 @@
+name: Build NovaOS Gaming ISO
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - "packages.extra"
+      - "scripts/ci-build-iso.sh"
+      - ".github/workflows/build-iso.yml"
+      - "overlay/**"
+
+permissions:
+  contents: read
+
+jobs:
+  build-iso:
+    runs-on: ubuntu-latest
+    container:
+      image: archlinux:latest
+      options: --privileged
+    timeout-minutes: 360
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+      - name: Initialize keyring and install build tools
+        shell: bash
+        run: |
+          set -Eeuo pipefail
+          pacman-key --init
+          pacman-key --populate archlinux
+          pacman -Syu --noconfirm --needed archiso git
+      - name: Build ISO
+        shell: bash
+        run: bash scripts/ci-build-iso.sh
+      - name: Create checksums
+        shell: bash
+        run: |
+          set -Eeuo pipefail
+          cd out
+          sha256sum *.iso > SHA256SUMS
+          ls -lh
+      - name: Upload ISO artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: novaos-gaming-iso
+          path: |
+            out/*.iso
+            out/SHA256SUMS
+          if-no-files-found: error
+          compression-level: 0
+          retention-days: 7

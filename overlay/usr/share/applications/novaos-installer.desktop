@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Application
+Name=Install NovaOS Gaming
+Name[ru]=Установить NovaOS Gaming
+Comment=Install NovaOS Gaming to this computer
+Comment[ru]=Установить NovaOS Gaming на этот компьютер
+Exec=sudo -n /usr/bin/calamares
+Icon=calamares
+Terminal=false
+Categories=System;
+StartupNotify=true

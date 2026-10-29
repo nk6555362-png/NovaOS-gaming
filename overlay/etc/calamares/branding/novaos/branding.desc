@@ -1,0 +1,15 @@
+componentName: novaos
+welcomeStyleCalamares: false
+windowExpanding: normal
+windowSize: 1024px,735px
+windowPlacement: center
+sidebar: widget
+navigation: widget
+strings:
+    productName: NovaOS Gaming
+    shortProductName: NovaOS
+    version: 0.1
+    shortVersion: 0.1
+    versionedName: NovaOS Gaming
+    shortVersionedName: NovaOS
+    bootloaderEntryName: NovaOS Gaming

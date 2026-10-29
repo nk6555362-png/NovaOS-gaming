@@ -1,5 +1,4 @@
-# NovaOS Gaming bootstrap ISO packages; official Arch repositories only.
-# Note: this adds packages to the live image but does not yet auto-start KDE.
+# NovaOS Gaming live ISO packages; official Arch repositories only.
 networkmanager
 vim
 nano
@@ -15,12 +14,14 @@ nvidia-prime
 nvidia-settings
 switcheroo-control
 plasma-meta
+plasma-workspace
 konsole
 dolphin
 ark
 kate
 sddm
 xorg-xwayland
+qt6-wayland
 pipewire
 pipewire-alsa
 pipewire-pulse
@@ -38,3 +39,11 @@ wine
 winetricks
 lutris
 firefox
+calamares
+grub
+efibootmgr
+dosfstools
+btrfs-progs
+squashfs-tools
+rsync
+sudo

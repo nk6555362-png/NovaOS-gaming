@@ -13,6 +13,10 @@ rm -rf -- "$PROFILE" "$WORK"
 mkdir -p "$OUT"
 cp -a "$RELENG" "$PROFILE"
 
+# Add NovaOS live-session and Calamares configuration to the disposable profile.
+mkdir -p "$PROFILE/airootfs"
+cp -a "$ROOT/overlay/." "$PROFILE/airootfs/"
+
 # Enable multilib in this disposable profile for Steam and 32-bit libraries.
 if grep -qE '^[[:space:]]*#\[multilib\]' "$PROFILE/pacman.conf"; then
   sed -i '/^[[:space:]]*#\[multilib\]/,/^[[:space:]]*#Include = \/etc\/pacman.d\/mirrorlist/s/^[[:space:]]*#//' "$PROFILE/pacman.conf"

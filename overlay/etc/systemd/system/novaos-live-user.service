@@ -1,0 +1,12 @@
+[Unit]
+Description=Create the temporary NovaOS live desktop user
+After=local-fs.target
+Before=display-manager.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/lib/novaos/setup-live-user
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target

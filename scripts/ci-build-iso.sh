@@ -27,7 +27,7 @@ if ! pacman -Si calamares >/dev/null 2>&1; then
   git clone https://aur.archlinux.org/calamares.git "$BUILD_DIR/calamares"
   chown -R nova-build:nova-build "$BUILD_DIR"
   runuser -u nova-build -- bash -lc "cd '$BUILD_DIR/calamares' && makepkg --syncdeps --noconfirm --cleanbuild"
-  mapfile -t calamares_pkgs < <(find "$BUILD_DIR/calamares" -maxdepth 1 -type f -name 'calamares-*.pkg.tar.zst' -print)
+  mapfile -t calamares_pkgs < <(find "$BUILD_DIR/calamares" -maxdepth 1 -type f -name 'calamares-*.pkg.tar.zst' ! -name 'calamares-debug-*.pkg.tar.zst' -print)
   (( ${#calamares_pkgs[@]} == 1 )) || { echo "Expected one Calamares package, found ${#calamares_pkgs[@]}." >&2; exit 1; }
   cp "${calamares_pkgs[0]}" "$LOCAL_REPO/"
   repo-add "$LOCAL_REPO/novaos-local.db.tar.gz" "$LOCAL_REPO/$(basename -- "${calamares_pkgs[0]}")"

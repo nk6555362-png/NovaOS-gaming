@@ -23,13 +23,15 @@ jobs:
     steps:
       - name: Checkout source
         uses: actions/checkout@v4
+        with:
+          persist-credentials: false
       - name: Initialize keyring and install build tools
         shell: bash
         run: |
           set -Eeuo pipefail
           pacman-key --init
           pacman-key --populate archlinux
-          pacman -Syu --noconfirm --needed archiso git
+          pacman -Syu --noconfirm --needed archiso base-devel git sudo
       - name: Build ISO
         shell: bash
         run: bash scripts/ci-build-iso.sh

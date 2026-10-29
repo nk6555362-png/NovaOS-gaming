@@ -13,25 +13,18 @@ ISO загружает KDE Plasma через SDDM в live-среду под вр
 После установки временная учётная запись, автологин live-системы и временное правило sudo удаляются.
 Calamares предлагает создать обычного пользователя и задать пароли.
 
-Перед установкой рядом с Windows сделайте резервную копию, сохраните ключ BitLocker при включённом шифровании и проверьте, что EFI-раздел Windows сохранён.
-
 ## Сборка
-
-### GitHub Actions
 
 Workflow запускается вручную (Actions → Build NovaOS Gaming ISO → Run workflow) или при изменениях файлов сборки в main.
 Артефакт novaos-gaming-iso содержит ISO и SHA256SUMS; GitHub хранит его 7 дней.
 
-### Локально
+Сборка скачивает и собирает Calamares через PKGBUILD из AUR, поскольку пакета нет в официальных репозиториях Arch.
+PKGBUILD — неофициальный пользовательский рецепт сборки; перед выпуском образа проверьте обновления AUR и тестируйте ISO в виртуальной машине и на целевом ноутбуке.
 
-На актуальной Arch Linux системе с archiso:
+Локально на актуальной Arch Linux системе:
 
-```bash
-sudo pacman -Syu --needed archiso
-bash scripts/ci-build-iso.sh
-```
+    sudo pacman -Syu --needed archiso base-devel git sudo
+    bash scripts/ci-build-iso.sh
 
 Скрипт копирует официальный профиль Archiso releng, накладывает файлы из overlay/, добавляет пакеты из packages.extra и запускает mkarchiso.
-
-Сборка требует привилегированного контейнера. Если GitHub-hosted runner ограничит mount/namespace, используйте Arch Linux VPS или self-hosted runner.
-Результат сборки следует проверить в виртуальной машине и на целевом ноутбуке перед установкой.
+Сборка требует привилегированный контейнер или Arch Linux VPS/self-hosted runner с поддержкой mount/namespace.

@@ -2,19 +2,7 @@
 set -Eeuo pipefail
 
 if ! id nova-live >/dev/null 2>&1; then
-  supplementary_groups=()
-  for group in wheel audio video storage optical; do
-    if getent group "$group" >/dev/null 2>&1; then
-      supplementary_groups+=("$group")
-    fi
-  done
-
-  if ((${#supplementary_groups[@]} > 0)); then
-    group_list=$(IFS=,; printf '%s' "${supplementary_groups[*]}")
-    useradd --create-home --shell /bin/bash --groups "$group_list" nova-live
-  else
-    useradd --create-home --shell /bin/bash nova-live
-  fi
+  useradd --create-home --shell /bin/bash nova-live
 fi
 
 # SDDM autologin must be able to start a session without a password.
